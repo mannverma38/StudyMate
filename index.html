@@ -1,5 +1,5 @@
-```html
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -7,2043 +7,575 @@
 <title>StudyMate - Student Study Planner</title>
 
 <style>
-*{
-    box-sizing:border-box;
-    margin:0;
-    padding:0;
-    font-family:Arial,sans-serif;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
 }
 
-body{
-    background:#f4f7fb;
-    color:#1f2937;
-    padding:20px;
-    transition:.3s;
+:root {
+    --primary: #4f46e5;
+    --secondary: #7c3aed;
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --text: #222222;
+    --muted: #666666;
 }
 
-.container{
-    max-width:1200px;
-    margin:auto;
+body {
+    background: var(--bg);
+    color: var(--text);
+    transition: 0.3s;
 }
 
-.header{
-    background:white;
-    padding:25px;
-    border-radius:18px;
-    margin-bottom:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.08);
+body.dark {
+    --bg: #111827;
+    --card: #1f2937;
+    --text: #f9fafb;
+    --muted: #d1d5db;
 }
 
-.header h1{
-    font-size:32px;
-    margin-bottom:8px;
+header {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    text-align: center;
+    padding: 28px 15px;
 }
 
-.header p{
-    color:#6b7280;
-    margin-bottom:15px;
+header h1 {
+    font-size: 34px;
+    margin-bottom: 8px;
 }
 
-button{
-    padding:11px 16px;
-    border:none;
-    border-radius:9px;
-    cursor:pointer;
-    background:#4f46e5;
-    color:white;
-    margin:4px;
-    transition:.2s;
+header p {
+    font-size: 16px;
 }
 
-button:hover{
-    opacity:.88;
-    transform:translateY(-1px);
+.topbar {
+    max-width: 1100px;
+    margin: 15px auto 0;
+    width: 92%;
+    display: flex;
+    justify-content: flex-end;
 }
 
-.secondary{
-    background:#64748b;
+.dark-btn {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid #ddd;
+    cursor: pointer;
 }
 
-.danger{
-    background:#dc2626;
+.container {
+    width: 92%;
+    max-width: 1100px;
+    margin: 20px auto;
 }
 
-.success{
-    background:#059669;
+.grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
 }
 
-.warning{
-    background:#d97706;
+.card {
+    background: var(--card);
+    color: var(--text);
+    padding: 22px;
+    border-radius: 16px;
+    box-shadow: 0 5px 18px rgba(0,0,0,0.08);
 }
 
-.card{
-    background:white;
-    padding:22px;
-    border-radius:18px;
-    margin-bottom:20px;
-    box-shadow:0 5px 15px rgba(0,0,0,.07);
+.card h2 {
+    color: var(--primary);
+    margin-bottom: 15px;
 }
 
-.card h2{
-    margin-bottom:16px;
+input, textarea, select {
+    width: 100%;
+    padding: 11px;
+    margin: 7px 0;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: var(--card);
+    color: var(--text);
 }
 
-input,select,textarea{
-    padding:11px;
-    border:1px solid #d1d5db;
-    border-radius:9px;
-    font-size:15px;
-    width:100%;
+textarea {
+    min-height: 100px;
+    resize: vertical;
 }
 
-textarea{
-    resize:vertical;
+button {
+    border: none;
+    padding: 10px 15px;
+    border-radius: 8px;
+    background: var(--primary);
+    color: white;
+    cursor: pointer;
+    margin: 5px 3px 0 0;
 }
 
-.grid{
-    display:grid;
-    grid-template-columns:repeat(2,1fr);
-    gap:12px;
+button:hover {
+    opacity: 0.85;
 }
 
-.dashboard{
-    display:grid;
-    grid-template-columns:repeat(5,1fr);
-    gap:15px;
-    margin-bottom:20px;
+.stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+    margin-top: 15px;
 }
 
-.stat-card{
-    background:white;
-    padding:18px;
-    border-radius:16px;
-    text-align:center;
-    box-shadow:0 5px 15px rgba(0,0,0,.07);
+.stat {
+    text-align: center;
+    background: #eef0ff;
+    color: #222;
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.stat-card h3{
-    font-size:14px;
-    margin-bottom:10px;
+.stat strong {
+    display: block;
+    font-size: 24px;
+    color: var(--primary);
 }
 
-.stat-card p{
-    font-size:27px;
-    font-weight:bold;
+.task {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    padding: 11px;
+    margin-top: 8px;
+    background: rgba(79,70,229,0.08);
+    border-radius: 8px;
 }
 
-.profile-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
+.task.completed {
+    text-decoration: line-through;
+    opacity: 0.6;
 }
 
-.welcome{
-    margin-top:14px;
-    font-weight:bold;
-    font-size:17px;
+.task-info {
+    flex: 1;
+    cursor: pointer;
 }
 
-.subject-add{
-    display:flex;
-    gap:8px;
+.task small {
+    display: block;
+    color: var(--muted);
+    margin-top: 3px;
 }
 
-.subject-chip{
-    display:inline-flex;
-    align-items:center;
-    gap:6px;
-    background:#eef2ff;
-    padding:8px 12px;
-    border-radius:20px;
-    margin:8px 5px 0 0;
-    font-size:14px;
+.timer {
+    text-align: center;
 }
 
-.subject-chip button{
-    padding:2px 7px;
-    margin:0;
-    border-radius:50%;
-    background:#dc2626;
+#timerDisplay {
+    font-size: 52px;
+    font-weight: bold;
+    margin: 18px 0;
+    color: var(--primary);
 }
 
-.task-controls{
-    display:grid;
-    grid-template-columns:1.5fr 1fr 1fr 1fr;
-    gap:10px;
-    margin-bottom:15px;
+.timer-mode {
+    color: var(--muted);
+    margin-bottom: 10px;
 }
 
-.task-item{
-    background:#f8fafc;
-    padding:15px;
-    border-radius:12px;
-    margin:10px 0;
-    border-left:5px solid #4f46e5;
+.progress-box {
+    background: #e5e7eb;
+    border-radius: 20px;
+    overflow: hidden;
+    height: 20px;
+    margin-top: 15px;
 }
 
-.task-item.completed{
-    opacity:.7;
-    border-left-color:#059669;
+#progressBar {
+    height: 100%;
+    width: 0%;
+    background: var(--primary);
+    transition: width 0.3s;
 }
 
-.task-title{
-    font-size:16px;
-    font-weight:bold;
-    margin-bottom:7px;
+#progressText {
+    margin-top: 10px;
+    color: var(--muted);
 }
 
-.completed-text{
-    text-decoration:line-through;
+.goal {
+    margin-top: 10px;
+    padding: 10px;
+    background: rgba(124,58,237,0.08);
+    border-radius: 8px;
 }
 
-.task-meta{
-    font-size:13px;
-    color:#64748b;
-    margin-bottom:8px;
+.quiz-question {
+    font-size: 18px;
+    margin-bottom: 15px;
 }
 
-.priority-high{
-    color:#dc2626;
-    font-weight:bold;
+.option {
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: rgba(79,70,229,0.08);
+    color: var(--text);
 }
 
-.priority-medium{
-    color:#d97706;
-    font-weight:bold;
+.option:hover {
+    background: rgba(79,70,229,0.18);
 }
 
-.priority-low{
-    color:#059669;
-    font-weight:bold;
+.result {
+    margin-top: 12px;
+    font-weight: bold;
 }
 
-.progress-box{
-    background:#e5e7eb;
-    height:15px;
-    border-radius:20px;
-    overflow:hidden;
-    margin-top:10px;
+.streak {
+    font-size: 34px;
+    font-weight: bold;
+    color: var(--primary);
+    margin: 10px 0;
 }
 
-.progress-bar{
-    width:0;
-    height:100%;
-    background:#4f46e5;
-    transition:.4s;
+footer {
+    text-align: center;
+    padding: 25px;
+    margin-top: 30px;
+    background: #111827;
+    color: white;
 }
 
-.subject-progress{
-    margin:15px 0;
-}
-
-.subject-name{
-    font-weight:bold;
-    margin-bottom:5px;
-}
-
-.subject-progress-box{
-    background:#e5e7eb;
-    height:12px;
-    border-radius:20px;
-    overflow:hidden;
-}
-
-.subject-progress-bar{
-    height:100%;
-    background:#4f46e5;
-}
-
-.subject-percentage{
-    font-size:13px;
-    color:#64748b;
-    margin-top:5px;
-}
-
-.note{
-    background:#f8fafc;
-    padding:15px;
-    border-radius:12px;
-    margin-top:12px;
-    border:1px solid #e5e7eb;
-}
-
-.note h4{
-    margin-bottom:7px;
-}
-
-.note p{
-    white-space:pre-wrap;
-}
-
-.quiz-option{
-    width:100%;
-    text-align:left;
-    background:#f3f4f6;
-    color:#1f2937;
-    border:1px solid #d1d5db;
-    margin:5px 0;
-}
-
-.quiz-option.correct{
-    background:#d1fae5;
-}
-
-.quiz-option.wrong{
-    background:#fee2e2;
-}
-
-.timer{
-    text-align:center;
-}
-
-#timer{
-    font-size:55px;
-    margin:18px 0;
-}
-
-.timer-status{
-    color:#64748b;
-    margin-bottom:10px;
-}
-
-.streak-box{
-    text-align:center;
-    padding:15px;
-    background:#fff7ed;
-    border-radius:12px;
-    margin-top:15px;
-}
-
-.footer{
-    text-align:center;
-    color:#64748b;
-    margin:25px 0;
-}
-
-.empty{
-    text-align:center;
-    color:#64748b;
-    padding:20px;
-}
-
-.data-buttons{
-    display:flex;
-    flex-wrap:wrap;
-    gap:5px;
-}
-
-.today{
-    background:#ecfdf5;
-    border-left-color:#059669;
-}
-
-body.dark-mode{
-    background:#111827;
-    color:#f9fafb;
-}
-
-body.dark-mode .header,
-body.dark-mode .card,
-body.dark-mode .stat-card{
-    background:#1f2937;
-    color:#f9fafb;
-}
-
-body.dark-mode input,
-body.dark-mode select,
-body.dark-mode textarea{
-    background:#374151;
-    color:white;
-    border-color:#4b5563;
-}
-
-body.dark-mode .task-item,
-body.dark-mode .note{
-    background:#374151;
-    border-color:#4b5563;
-}
-
-body.dark-mode .quiz-option{
-    background:#374151;
-    color:white;
-    border-color:#4b5563;
-}
-
-body.dark-mode .progress-box,
-body.dark-mode .subject-progress-box{
-    background:#374151;
-}
-
-body.dark-mode .header p,
-body.dark-mode .footer,
-body.dark-mode .task-meta,
-body.dark-mode .subject-percentage,
-body.dark-mode .timer-status{
-    color:#d1d5db;
-}
-
-body.dark-mode .subject-chip{
-    background:#374151;
-}
-
-body.dark-mode .streak-box{
-    background:#3f2d16;
-}
+@media(max-width:600px) {
 
-@media(max-width:900px){
-    .dashboard{
-        grid-template-columns:repeat(3,1fr);
+    header h1 {
+        font-size: 27px;
     }
 
-    .task-controls{
-        grid-template-columns:1fr 1fr;
-    }
-}
-
-@media(max-width:600px){
-    body{
-        padding:10px;
+    .container {
+        width: 95%;
     }
 
-    .profile-grid,
-    .grid{
-        grid-template-columns:1fr;
+    .stats {
+        grid-template-columns: 1fr;
     }
 
-    .dashboard{
-        grid-template-columns:1fr 1fr;
-    }
-
-    .task-controls{
-        grid-template-columns:1fr;
-    }
-
-    .subject-add{
-        flex-direction:column;
-    }
-
-    .header h1{
-        font-size:25px;
-    }
-
-    #timer{
-        font-size:42px;
+    #timerDisplay {
+        font-size: 42px;
     }
 }
 </style>
+
 </head>
 
 <body>
 
-<div class="container">
-
-<!-- HEADER -->
-<div class="header">
+<header>
     <h1>📚 StudyMate</h1>
-    <p>Your Personal Student Study Planner</p>
+    <p>Your Smart Student Study Planner</p>
+</header>
 
-    <button onclick="toggleDarkMode()" id="darkModeButton">
+<div class="topbar">
+    <button class="dark-btn" onclick="toggleDarkMode()">
         🌙 Dark Mode
     </button>
-
-    <button onclick="exportData()" class="success">
-        📥 Export Backup
-    </button>
-
-    <button onclick="document.getElementById('importFile').click()" class="secondary">
-        📤 Import Backup
-    </button>
-
-    <input type="file" id="importFile" accept=".json" style="display:none" onchange="importData(event)">
 </div>
 
+<div class="container">
 
-<!-- PROFILE -->
-<div class="card">
-    <h2>👤 Student Profile</h2>
-
-    <div class="profile-grid">
-        <input id="studentName" type="text" placeholder="Enter your name">
-        <input id="studentGoal" type="text" placeholder="Study goal e.g. 90% marks">
-    </div>
-
-    <button onclick="saveProfile()">Save Profile</button>
-
-    <p id="welcomeMessage" class="welcome"></p>
-</div>
-
-
-<!-- SUBJECTS -->
-<div class="card">
-    <h2>📚 My Subjects</h2>
-
-    <p>Add subjects according to your course.</p>
-
-    <div class="subject-add">
-        <input id="newSubject" type="text" placeholder="Enter subject name">
-        <button onclick="addSubject()">Add Subject</button>
-    </div>
-
-    <div id="subjectChips"></div>
-</div>
-
+<div class="grid">
 
 <!-- DASHBOARD -->
-<div class="dashboard">
 
-    <div class="stat-card">
-        <h3>📋 Total Tasks</h3>
-        <p id="totalTasks">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>✅ Completed</h3>
-        <p id="dashboardCompleted">0</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>📈 Progress</h3>
-        <p id="dashboardProgress">0%</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>🎯 Daily Goal</h3>
-        <p id="dailyGoal">0 / 3</p>
-    </div>
-
-    <div class="stat-card">
-        <h3>🔥 Streak</h3>
-        <p id="streak">0</p>
-    </div>
-
-</div>
-
-
-<!-- TASK PLANNER -->
 <div class="card">
+    <h2>📊 Dashboard</h2>
 
-    <h2>📋 Study Planner</h2>
-
-    <div class="grid">
-
-        <select id="taskSubject"></select>
-
-        <input id="taskInput"
-               type="text"
-               placeholder="What do you want to study?">
-
-        <input id="taskDate" type="date">
-
-        <select id="taskPriority">
-            <option value="Medium">🟡 Medium Priority</option>
-            <option value="High">🔴 High Priority</option>
-            <option value="Low">🟢 Low Priority</option>
-        </select>
-
+```
+<div class="stats">
+    <div class="stat">
+        <strong id="totalCount">0</strong>
+        Tasks
     </div>
 
-    <button onclick="addTask()">➕ Add Task</button>
+    <div class="stat">
+        <strong id="completedCount">0</strong>
+        Done
+    </div>
+
+    <div class="stat">
+        <strong id="percentageCount">0%</strong>
+        Progress
+    </div>
+</div>
+
+<div class="progress-box">
+    <div id="progressBar"></div>
+</div>
+
+<p id="progressText">Start studying to track your progress!</p>
+```
 
 </div>
 
+<!-- STUDY PLANNER -->
 
-<!-- TASK SEARCH -->
 <div class="card">
+    <h2>📝 Study Planner</h2>
 
-    <h2>🔎 Find Tasks</h2>
+```
+<input
+    type="text"
+    id="taskInput"
+    placeholder="Enter study task"
+>
 
-    <div class="task-controls">
+<select id="subjectInput">
+    <option value="General">General</option>
+    <option value="Mathematics">Mathematics</option>
+    <option value="Physics">Physics</option>
+    <option value="Chemistry">Chemistry</option>
+    <option value="Computer Science">Computer Science</option>
+    <option value="English">English</option>
+</select>
 
-        <input id="searchTask"
-               type="text"
-               placeholder="Search tasks..."
-               oninput="displayTasks()">
+<button onclick="addTask()">➕ Add Task</button>
 
-        <select id="filterSubject" onchange="displayTasks()">
-            <option value="All">All Subjects</option>
-        </select>
-
-        <select id="filterStatus" onchange="displayTasks()">
-            <option value="All">All Tasks</option>
-            <option value="Pending">Pending</option>
-            <option value="Completed">Completed</option>
-        </select>
-
-        <select id="filterDate" onchange="displayTasks()">
-            <option value="All">All Dates</option>
-            <option value="Today">Today</option>
-            <option value="Upcoming">Upcoming</option>
-        </select>
-
-    </div>
-
-    <button onclick="clearCompleted()" class="danger">
-        🧹 Clear Completed
-    </button>
-
-    <div id="taskList"></div>
+<div id="taskList"></div>
+```
 
 </div>
 
+<!-- POMODORO TIMER -->
 
-<!-- PROGRESS -->
+<div class="card timer">
+    <h2>⏰ Study Timer</h2>
+
+```
+<p class="timer-mode">Pomodoro Session</p>
+
+<div id="timerDisplay">25:00</div>
+
+<button onclick="startTimer()">▶ Start</button>
+<button onclick="pauseTimer()">⏸ Pause</button>
+<button onclick="resetTimer()">🔄 Reset</button>
+```
+
+</div>
+
+<!-- DAILY GOALS -->
+
 <div class="card">
+    <h2>🎯 Daily Goal</h2>
 
-    <h2>📊 My Progress</h2>
+```
+<input
+    type="text"
+    id="goalInput"
+    placeholder="Example: Complete Physics chapter"
+>
 
-    <p>
-        Completed:
-        <strong id="completed">0</strong>
-    </p>
+<button onclick="addGoal()">Add Goal</button>
 
-    <p style="margin-top:8px">
-        Overall Progress:
-        <strong id="progressPercentage">0%</strong>
-    </p>
-
-    <div class="progress-box">
-        <div id="progressBar" class="progress-bar"></div>
-    </div>
-
-    <div class="streak-box">
-        🔥 Current Study Streak:
-        <strong id="streakText">0 days</strong>
-    </div>
+<div id="goalList"></div>
+```
 
 </div>
-
-
-<!-- SUBJECT PROGRESS -->
-<div class="card">
-
-    <h2>📚 Subject-wise Progress</h2>
-
-    <div id="subjectProgress"></div>
-
-</div>
-
 
 <!-- NOTES -->
+
 <div class="card">
+    <h2>📌 Quick Notes</h2>
 
-    <h2>📝 Quick Notes</h2>
+```
+<textarea
+    id="notes"
+    placeholder="Write your study notes here..."
+></textarea>
 
-    <div class="grid">
+<button onclick="saveNotes()">💾 Save Notes</button>
+<button onclick="clearNotes()">🗑 Clear</button>
 
-        <select id="noteSubject"></select>
-
-        <input id="noteSearch"
-               type="text"
-               placeholder="Search notes..."
-               oninput="displayNotes()">
-
-    </div>
-
-    <br>
-
-    <textarea id="noteInput"
-              rows="5"
-              placeholder="Write your important notes here..."></textarea>
-
-    <button onclick="saveNote()">💾 Save Note</button>
-
-    <div id="notesList"></div>
+<p id="noteStatus" class="result"></p>
+```
 
 </div>
 
+<!-- STREAK -->
+
+<div class="card">
+    <h2>🔥 Study Streak</h2>
+
+```
+<div class="streak">
+    🔥 <span id="streakCount">0</span> days
+</div>
+
+<p>
+    Keep studying every day and build your streak!
+</p>
+
+<button onclick="markStudyDay()">
+    ✅ Studied Today
+</button>
+```
+
+</div>
 
 <!-- QUIZ -->
+
 <div class="card">
+    <h2>🧠 Daily Quiz</h2>
 
-    <h2>🧠 Practice Quiz</h2>
+```
+<p class="quiz-question">
+    Which language is mainly used to structure a web page?
+</p>
 
-    <p id="questionNumber">Question 1 of 10</p>
+<button class="option" onclick="checkAnswer(false)">
+    Python
+</button>
 
-    <h3 id="question" style="margin:18px 0">
-        Loading question...
-    </h3>
+<button class="option" onclick="checkAnswer(true)">
+    HTML
+</button>
 
-    <div id="options"></div>
+<button class="option" onclick="checkAnswer(false)">
+    C++
+</button>
 
-    <button id="nextButton" onclick="nextQuestion()">
-        Next Question
-    </button>
+<button class="option" onclick="checkAnswer(false)">
+    Java
+</button>
 
-    <h3 id="quizResult"></h3>
-
-</div>
-
-
-<!-- TIMER -->
-<div class="card timer">
-
-    <h2>⏱️ Pomodoro Study Timer</h2>
-
-    <p class="timer-status" id="timerStatus">
-        Focus for 25 minutes
-    </p>
-
-    <h3 id="timer">25:00</h3>
-
-    <button onclick="startTimer()" class="success">
-        ▶ Start
-    </button>
-
-    <button onclick="pauseTimer()" class="warning">
-        ⏸ Pause
-    </button>
-
-    <button onclick="resetTimer()" class="secondary">
-        🔄 Reset
-    </button>
+<p id="quizResult" class="result"></p>
+```
 
 </div>
 
-
-<!-- DATA -->
-<div class="card">
-
-    <h2>💾 Your Study Data</h2>
-
-    <p>
-        Your tasks, notes, subjects and profile are stored in your browser.
-        Use Export Backup if you want to keep a copy.
-    </p>
-
-    <div class="data-buttons">
-
-        <button onclick="exportData()" class="success">
-            📥 Download Backup
-        </button>
-
-        <button onclick="document.getElementById('importFile').click()" class="secondary">
-            📤 Restore Backup
-        </button>
-
-    </div>
-
+</div>
 </div>
 
-
-<!-- FOOTER -->
-<div class="footer">
+<footer>
     <p>Made with ❤️ for students | StudyMate</p>
-    <p style="margin-top:5px">
-        Study smarter. Stay consistent. 🚀
+    <p style="margin-top:7px;">
+        Plan • Study • Track • Improve 🚀
     </p>
-</div>
-
-</div>
-
+</footer>
 
 <script>
 
-/* ================================
-   STORAGE
-================================ */
-
-const defaultSubjects = [
-    "Mathematics",
-    "Python",
-    "DSA",
-    "AI/ML",
-    "Other"
-];
+/* ================= TASK PLANNER ================= */
 
 let tasks =
-    JSON.parse(localStorage.getItem("studyTasks")) || [];
+    JSON.parse(localStorage.getItem("studymateTasks")) || [];
 
-let notes =
-    JSON.parse(localStorage.getItem("studyNotes")) || [];
-
-
-/* ================================
-   PROFILE
-================================ */
-
-function saveProfile(){
-
-    const name =
-        document.getElementById("studentName").value.trim();
-
-    const goal =
-        document.getElementById("studentGoal").value.trim();
-
-    if(!name){
-        alert("Please enter your name!");
-        return;
-    }
+function saveTasks() {
 
     localStorage.setItem(
-        "studyProfile",
-        JSON.stringify({name,goal})
-    );
-
-    showProfile();
-
-    alert("Profile saved successfully! 🎉");
-}
-
-function showProfile(){
-
-    const profile =
-        JSON.parse(localStorage.getItem("studyProfile")) || {};
-
-    document.getElementById("studentName").value =
-        profile.name || "";
-
-    document.getElementById("studentGoal").value =
-        profile.goal || "";
-
-    document.getElementById("welcomeMessage").innerText =
-        profile.name
-        ? `Welcome, ${profile.name}! 🎓 ${
-            profile.goal ? "Goal: " + profile.goal : ""
-          }`
-        : "";
-}
-
-
-/* ================================
-   SUBJECTS
-================================ */
-
-function getSubjects(){
-
-    return JSON.parse(
-        localStorage.getItem("studySubjects")
-    ) || defaultSubjects;
-}
-
-function saveSubjects(subjects){
-
-    localStorage.setItem(
-        "studySubjects",
-        JSON.stringify(subjects)
+        "studymateTasks",
+        JSON.stringify(tasks)
     );
 }
 
-function addSubject(){
+function addTask() {
 
     const input =
-        document.getElementById("newSubject");
-
-    const name =
-        input.value.trim();
-
-    if(!name){
-        alert("Please enter a subject name!");
-        return;
-    }
-
-    const subjects = getSubjects();
-
-    if(subjects.some(
-        s => s.toLowerCase() === name.toLowerCase()
-    )){
-        alert("This subject already exists!");
-        return;
-    }
-
-    subjects.push(name);
-
-    saveSubjects(subjects);
-
-    input.value = "";
-
-    updateSubjectSelectors();
-    updateSubjectChips();
-    updateSubjectProgress();
-}
-
-function deleteSubject(index){
-
-    const subjects = getSubjects();
-
-    if(subjects.length <= 1){
-        alert("Keep at least one subject.");
-        return;
-    }
-
-    if(subjects[index] === "Other"){
-        alert("The Other subject cannot be removed.");
-        return;
-    }
-
-    subjects.splice(index,1);
-
-    saveSubjects(subjects);
-
-    updateSubjectSelectors();
-    updateSubjectChips();
-    updateSubjectProgress();
-}
-
-function updateSubjectSelectors(){
-
-    const subjects = getSubjects();
-
-    const taskSelect =
-        document.getElementById("taskSubject");
-
-    const noteSelect =
-        document.getElementById("noteSubject");
-
-    const filterSelect =
-        document.getElementById("filterSubject");
-
-    const currentTask = taskSelect.value;
-    const currentNote = noteSelect.value;
-    const currentFilter = filterSelect.value;
-
-    taskSelect.innerHTML = "";
-    noteSelect.innerHTML = "";
-
-    subjects.forEach(subject => {
-
-        const option1 =
-            document.createElement("option");
-
-        option1.value = subject;
-        option1.textContent = subject;
-
-        taskSelect.appendChild(option1);
-
-
-        const option2 =
-            document.createElement("option");
-
-        option2.value = subject;
-        option2.textContent = subject;
-
-        noteSelect.appendChild(option2);
-
-    });
-
-    filterSelect.innerHTML =
-        `<option value="All">All Subjects</option>`;
-
-    subjects.forEach(subject => {
-
-        const option =
-            document.createElement("option");
-
-        option.value = subject;
-        option.textContent = subject;
-
-        filterSelect.appendChild(option);
-
-    });
-
-    if(subjects.includes(currentTask))
-        taskSelect.value = currentTask;
-
-    if(subjects.includes(currentNote))
-        noteSelect.value = currentNote;
-
-    if(
-        currentFilter === "All" ||
-        subjects.includes(currentFilter)
-    )
-        filterSelect.value = currentFilter;
-}
-
-function updateSubjectChips(){
-
-    const container =
-        document.getElementById("subjectChips");
-
-    container.innerHTML = "";
-
-    getSubjects().forEach((subject,index) => {
-
-        const chip =
-            document.createElement("span");
-
-        chip.className = "subject-chip";
-
-        chip.innerHTML =
-            `${escapeHTML(subject)}`;
-
-        if(subject !== "Other"){
-
-            const btn =
-                document.createElement("button");
-
-            btn.innerText = "×";
-
-            btn.onclick = () =>
-                deleteSubject(index);
-
-            chip.appendChild(btn);
-        }
-
-        container.appendChild(chip);
-    });
-}
-
-
-/* ================================
-   TASK MANAGEMENT
-================================ */
-
-function addTask(){
-
-    const text =
-        document.getElementById("taskInput")
-        .value.trim();
+        document.getElementById("taskInput");
 
     const subject =
-        document.getElementById("taskSubject").value;
+        document.getElementById("subjectInput");
 
-    const date =
-        document.getElementById("taskDate").value ||
-        getToday();
+    const text = input.value.trim();
 
-    const priority =
-        document.getElementById("taskPriority").value;
+    if (text === "") {
 
-    if(!text){
-        alert("Please enter a study task!");
+        alert("Please enter a study task.");
+
         return;
     }
 
     tasks.push({
 
-        id:Date.now(),
+        text: text,
 
-        text:text,
+        subject: subject.value,
 
-        subject:subject,
-
-        date:date,
-
-        priority:priority,
-
-        completed:false,
-
-        completedDate:null
-
+        completed: false
     });
 
-    saveTasks();
+    input.value = "";
 
-    document.getElementById("taskInput").value = "";
+    saveTasks();
 
     displayTasks();
 }
 
-function saveTasks(){
-
-    localStorage.setItem(
-        "studyTasks",
-        JSON.stringify(tasks)
-    );
-}
-
-function completeTask(index){
+function toggleTask(index) {
 
     tasks[index].completed =
         !tasks[index].completed;
 
-    tasks[index].completedDate =
-        tasks[index].completed
-        ? getToday()
-        : null;
+    saveTasks();
+
+    displayTasks();
+}
+
+function deleteTask(index) {
+
+    tasks.splice(index, 1);
 
     saveTasks();
 
     displayTasks();
 }
 
-function deleteTask(index){
-
-    if(!confirm("Delete this task?"))
-        return;
-
-    tasks.splice(index,1);
-
-    saveTasks();
-
-    displayTasks();
-}
-
-function editTask(index){
-
-    const newText =
-        prompt(
-            "Edit your study task:",
-            tasks[index].text
-        );
-
-    if(newText === null)
-        return;
-
-    if(!newText.trim()){
-        alert("Task cannot be empty!");
-        return;
-    }
-
-    tasks[index].text =
-        newText.trim();
-
-    saveTasks();
-
-    displayTasks();
-}
-
-function clearCompleted(){
-
-    const completedCount =
-        tasks.filter(t => t.completed).length;
-
-    if(completedCount === 0){
-        alert("No completed tasks to clear.");
-        return;
-    }
-
-    if(!confirm(
-        `Delete ${completedCount} completed task(s)?`
-    ))
-        return;
-
-    tasks =
-        tasks.filter(t => !t.completed);
-
-    saveTasks();
-
-    displayTasks();
-}
-
-function displayTasks(){
+function displayTasks() {
 
     const list =
         document.getElementById("taskList");
 
-    const search =
-        document.getElementById("searchTask")
-        .value
-        .toLowerCase();
-
-    const subjectFilter =
-        document.getElementById("filterSubject").value;
-
-    const statusFilter =
-        document.getElementById("filterStatus").value;
-
-    const dateFilter =
-        document.getElementById("filterDate").value;
-
-    let filtered =
-        tasks.filter(task => {
-
-            const matchesSearch =
-                task.text
-                .toLowerCase()
-                .includes(search);
-
-            const matchesSubject =
-                subjectFilter === "All" ||
-                task.subject === subjectFilter;
-
-            const matchesStatus =
-                statusFilter === "All" ||
-                (statusFilter === "Completed" && task.completed) ||
-                (statusFilter === "Pending" && !task.completed);
-
-            let matchesDate = true;
-
-            if(dateFilter === "Today")
-                matchesDate =
-                    task.date === getToday();
-
-            if(dateFilter === "Upcoming")
-                matchesDate =
-                    task.date >= getToday() &&
-                    !task.completed;
-
-            return(
-                matchesSearch &&
-                matchesSubject &&
-                matchesStatus &&
-                matchesDate
-            );
-        });
-
-    filtered.sort((a,b) =>
-        a.date.localeCompare(b.date)
-    );
-
     list.innerHTML = "";
 
-    if(filtered.length === 0){
-
-        list.innerHTML =
-            `<div class="empty">
-                No tasks found. Add a study task above! 📚
-             </div>`;
-
-        updateProgress();
-        updateSubjectProgress();
-        updateStreak();
-
-        return;
-    }
-
-    filtered.forEach(task => {
-
-        const originalIndex =
-            tasks.findIndex(t => t.id === task.id);
+    tasks.forEach((task, index) => {
 
         const div =
             document.createElement("div");
 
-        const isToday =
-            task.date === getToday();
-
         div.className =
-            "task-item " +
-            (task.completed ? "completed " : "") +
-            (isToday ? "today" : "");
-
-        let priorityClass =
-            task.priority === "High"
-            ? "priority-high"
-            : task.priority === "Low"
-            ? "priority-low"
-            : "priority-medium";
+            "task" +
+            (task.completed ? " completed" : "");
 
         div.innerHTML = `
 
-            <div class="task-title ${
-                task.completed
-                ? "completed-text"
-                : ""
-            }">
-                ${escapeHTML(task.text)}
+            <div
+                class="task-info"
+                onclick="toggleTask(${index})"
+            >
+                <strong>${escapeHTML(task.text)}</strong>
+
+                <small>
+                    📚 ${escapeHTML(task.subject)}
+                </small>
             </div>
 
-            <div class="task-meta">
-                📚 ${escapeHTML(task.subject)}
-                &nbsp; | &nbsp;
-                📅 ${formatDate(task.date)}
-                &nbsp; | &nbsp;
-                <span class="${priorityClass}">
-                    ${task.priority} Priority
-                </span>
-            </div>
-
-            ${
-                task.completed
-                ? `<strong>✅ Completed</strong>`
-                : `<button class="success"
-                    onclick="completeTask(${originalIndex})">
-                    ✅ Complete
-                   </button>`
-            }
-
-            <button
-                onclick="editTask(${originalIndex})">
-                ✏️ Edit
+            <button onclick="deleteTask(${index})">
+                🗑
             </button>
 
-            <button
-                class="danger"
-                onclick="deleteTask(${originalIndex})">
-                🗑️ Delete
-            </button>
         `;
 
         list.appendChild(div);
     });
 
     updateProgress();
-    updateSubjectProgress();
-    updateStreak();
 }
 
+function escapeHTML(text) {
 
-/* ================================
-   PROGRESS
-================================ */
-
-function updateProgress(){
-
-    const total =
-        tasks.length;
-
-    const completed =
-        tasks.filter(t => t.completed).length;
-
-    const percentage =
-        total === 0
-        ? 0
-        : Math.round(
-            completed / total * 100
-          );
-
-    document.getElementById("completed")
-        .innerText = completed;
-
-    document.getElementById("progressPercentage")
-        .innerText = percentage + "%";
-
-    document.getElementById("progressBar")
-        .style.width = percentage + "%";
-
-    document.getElementById("totalTasks")
-        .innerText = total;
-
-    document.getElementById("dashboardCompleted")
-        .innerText = completed;
-
-    document.getElementById("dashboardProgress")
-        .innerText = percentage + "%";
-
-    const todayCompleted =
-        tasks.filter(
-            t =>
-            t.completed &&
-            t.completedDate === getToday()
-        ).length;
-
-    document.getElementById("dailyGoal")
-        .innerText =
-        Math.min(todayCompleted,3) + " / 3";
-}
-
-
-/* ================================
-   SUBJECT PROGRESS
-================================ */
-
-function updateSubjectProgress(){
-
-    const container =
-        document.getElementById("subjectProgress");
-
-    container.innerHTML = "";
-
-    getSubjects().forEach(subject => {
-
-        const subjectTasks =
-            tasks.filter(
-                t => t.subject === subject
-            );
-
-        const completed =
-            subjectTasks.filter(
-                t => t.completed
-            ).length;
-
-        const total =
-            subjectTasks.length;
-
-        const percentage =
-            total === 0
-            ? 0
-            : Math.round(
-                completed / total * 100
-              );
-
-        container.innerHTML += `
-
-            <div class="subject-progress">
-
-                <div class="subject-name">
-                    ${escapeHTML(subject)}
-                </div>
-
-                <div class="subject-progress-box">
-
-                    <div
-                        class="subject-progress-bar"
-                        style="width:${percentage}%">
-                    </div>
-
-                </div>
-
-                <div class="subject-percentage">
-                    ${completed} / ${total}
-                    completed — ${percentage}%
-                </div>
-
-            </div>
-        `;
-    });
-}
-
-
-/* ================================
-   STREAK
-================================ */
-
-function updateStreak(){
-
-    const dates =
-        [...new Set(
-            tasks
-            .filter(t => t.completed && t.completedDate)
-            .map(t => t.completedDate)
-        )].sort().reverse();
-
-    let streak = 0;
-
-    let current = new Date();
-
-    for(let i=0;i<dates.length;i++){
-
-        const expected =
-            dateToString(current);
-
-        if(dates.includes(expected)){
-
-            streak++;
-
-            current.setDate(
-                current.getDate() - 1
-            );
-
-        }else{
-
-            break;
-        }
-    }
-
-    document.getElementById("streak")
-        .innerText = streak;
-
-    document.getElementById("streakText")
-        .innerText =
-        streak + (streak === 1 ? " day" : " days");
-}
-
-
-/* ================================
-   NOTES
-================================ */
-
-function saveNote(){
-
-    const subject =
-        document.getElementById("noteSubject").value;
-
-    const text =
-        document.getElementById("noteInput")
-        .value.trim();
-
-    if(!text){
-        alert("Please write a note!");
-        return;
-    }
-
-    notes.unshift({
-
-        id:Date.now(),
-
-        subject:subject,
-
-        text:text,
-
-        date:getToday()
-
-    });
-
-    localStorage.setItem(
-        "studyNotes",
-        JSON.stringify(notes)
-    );
-
-    document.getElementById("noteInput").value = "";
-
-    displayNotes();
-}
-
-function deleteNote(index){
-
-    if(!confirm("Delete this note?"))
-        return;
-
-    notes.splice(index,1);
-
-    localStorage.setItem(
-        "studyNotes",
-        JSON.stringify(notes)
-    );
-
-    displayNotes();
-}
-
-function displayNotes(){
-
-    const list =
-        document.getElementById("notesList");
-
-    const search =
-        document.getElementById("noteSearch")
-        .value
-        .toLowerCase();
-
-    const filtered =
-        notes.filter(note =>
-            note.text.toLowerCase().includes(search) ||
-            note.subject.toLowerCase().includes(search)
-        );
-
-    list.innerHTML = "";
-
-    if(filtered.length === 0){
-
-        list.innerHTML =
-            `<div class="empty">
-                No notes found.
-             </div>`;
-
-        return;
-    }
-
-    filtered.forEach(note => {
-
-        const originalIndex =
-            notes.findIndex(
-                n => n.id === note.id
-            );
-
-        list.innerHTML += `
-
-            <div class="note">
-
-                <h4>
-                    📚 ${escapeHTML(note.subject)}
-                </h4>
-
-                <p>
-                    ${escapeHTML(note.text)}
-                </p>
-
-                <small>
-                    📅 ${formatDate(note.date)}
-                </small>
-
-                <br>
-
-                <button
-                    class="danger"
-                    onclick="deleteNote(${originalIndex})">
-                    🗑️ Delete
-                </button>
-
-            </div>
-        `;
-    });
-}
-
-
-/* ================================
-   QUIZ
-================================ */
-
-const quizQuestions = [
-
-{
-question:"Which language is mainly used to structure a web page?",
-options:["Python","HTML","C","Java"],
-answer:"HTML"
-},
-
-{
-question:"Which language is used to style a webpage?",
-options:["CSS","Python","C++","SQL"],
-answer:"CSS"
-},
-
-{
-question:"Which keyword is used to create a function in JavaScript?",
-options:["function","def","func","method"],
-answer:"function"
-},
-
-{
-question:"Which language is commonly used for AI and Machine Learning?",
-options:["Python","HTML","CSS","XML"],
-answer:"Python"
-},
-
-{
-question:"What does DSA stand for?",
-options:[
-"Data Structure and Algorithms",
-"Digital System Application",
-"Data Science Application",
-"Development Software Architecture"
-],
-answer:"Data Structure and Algorithms"
-},
-
-{
-question:"Which data structure follows FIFO?",
-options:["Stack","Queue","Tree","Graph"],
-answer:"Queue"
-},
-
-{
-question:"Which symbol is used for comments in JavaScript?",
-options:["//","##","<!-- -->","**"],
-answer:"//"
-},
-
-{
-question:"What does CPU stand for?",
-options:[
-"Central Processing Unit",
-"Computer Personal Unit",
-"Central Program Utility",
-"Control Processing User"
-],
-answer:"Central Processing Unit"
-},
-
-{
-question:"Which one is an operating system?",
-options:["Python","Windows","HTML","CSS"],
-answer:"Windows"
-},
-
-{
-question:"Which language is widely used for web page interactivity?",
-options:["JavaScript","HTML","SQL","C"],
-answer:"JavaScript"
-}
-
-];
-
-let currentQuestion = 0;
-let quizScore = 0;
-let answerSelected = false;
-
-function loadQuestion(){
-
-    const question =
-        quizQuestions[currentQuestion];
-
-    document.getElementById("questionNumber")
-        .innerText =
-        `Question ${currentQuestion + 1} of ${quizQuestions.length}`;
-
-    document.getElementById("question")
-        .innerText =
-        question.question;
-
-    const options =
-        document.getElementById("options");
-
-    options.innerHTML = "";
-
-    answerSelected = false;
-
-    question.options.forEach(option => {
-
-        const button =
-            document.createElement("button");
-
-        button.innerText = option;
-
-        button.className =
-            "quiz-option";
-
-        button.onclick = () =>
-            selectAnswer(button,option);
-
-        options.appendChild(button);
-    });
-
-    document.getElementById("quizResult")
-        .innerText = "";
-}
-
-function selectAnswer(button,selected){
-
-    if(answerSelected)
-        return;
-
-    answerSelected = true;
-
-    const correct =
-        quizQuestions[currentQuestion].answer;
-
-    if(selected === correct){
-
-        button.classList.add("correct");
-
-        quizScore++;
-
-    }else{
-
-        button.classList.add("wrong");
-
-        document
-            .querySelectorAll(".quiz-option")
-            .forEach(btn => {
-
-                if(btn.innerText === correct)
-                    btn.classList.add("correct");
-
-            });
-    }
-}
-
-function nextQuestion(){
-
-    if(!answerSelected){
-
-        alert("Please select an answer first!");
-        return;
-    }
-
-    currentQuestion++;
-
-    if(currentQuestion >= quizQuestions.length){
-
-        showQuizResult();
-
-        return;
-    }
-
-    loadQuestion();
-}
-
-function showQuizResult(){
-
-    document.getElementById("questionNumber")
-        .innerText =
-        "Quiz Completed 🎉";
-
-    document.getElementById("question")
-        .innerText =
-        `Your Score: ${quizScore} / ${quizQuestions.length}`;
-
-    document.getElementById("options")
-        .innerHTML = "";
-
-    document.getElementById("nextButton")
-        .innerText =
-        "🔄 Restart Quiz";
-
-    document.getElementById("nextButton")
-        .onclick =
-        restartQuiz;
-
-    document.getElementById("quizResult")
-        .innerText =
-        quizScore >= 8
-        ? "🌟 Excellent!"
-        : quizScore >= 5
-        ? "👍 Good Job!"
-        : "📚 Keep Practicing!";
-}
-
-function restartQuiz(){
-
-    currentQuestion = 0;
-    quizScore = 0;
-    answerSelected = false;
-
-    document.getElementById("nextButton")
-        .innerText =
-        "Next Question";
-
-    document.getElementById("nextButton")
-        .onclick =
-        nextQuestion;
-
-    loadQuestion();
-}
-
-
-/* ================================
-   TIMER
-================================ */
-
-let time = 25 * 60;
-let timerInterval = null;
-
-function updateTimerDisplay(){
-
-    const minutes =
-        Math.floor(time / 60);
-
-    const seconds =
-        time % 60;
-
-    document.getElementById("timer")
-        .innerText =
-        `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
-}
-
-function startTimer(){
-
-    if(timerInterval)
-        return;
-
-    document.getElementById("timerStatus")
-        .innerText =
-        "🔥 Focus mode running...";
-
-    timerInterval =
-        setInterval(() => {
-
-            if(time <= 0){
-
-                clearInterval(timerInterval);
-                timerInterval = null;
-
-                alert(
-                    "🎉 Study session completed!"
-                );
-
-                time = 25 * 60;
-
-                updateTimerDisplay();
-
-                document.getElementById("timerStatus")
-                    .innerText =
-                    "Great work! Start another session.";
-
-                return;
-            }
-
-            time--;
-
-            updateTimerDisplay();
-
-        },1000);
-}
-
-function pauseTimer(){
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    document.getElementById("timerStatus")
-        .innerText =
-        "⏸ Timer paused";
-}
-
-function resetTimer(){
-
-    clearInterval(timerInterval);
-
-    timerInterval = null;
-
-    time = 25 * 60;
-
-    updateTimerDisplay();
-
-    document.getElementById("timerStatus")
-        .innerText =
-        "Focus for 25 minutes";
-}
-
-
-/* ================================
-   DARK MODE
-================================ */
-
-function toggleDarkMode(){
-
-    document.body.classList.toggle(
-        "dark-mode"
-    );
-
-    const dark =
-        document.body.classList.contains(
-            "dark-mode"
-        );
-
-    localStorage.setItem(
-        "darkMode",
-        dark
-    );
-
-    document.getElementById("darkModeButton")
-        .innerText =
-        dark
-        ? "☀️ Light Mode"
-        : "🌙 Dark Mode";
-}
-
-
-/* ================================
-   BACKUP / RESTORE
-================================ */
-
-function exportData(){
-
-    const data = {
-
-        profile:
-            JSON.parse(
-                localStorage.getItem("studyProfile")
-            ) || {},
-
-        subjects:getSubjects(),
-
-        tasks:tasks,
-
-        notes:notes,
-
-        darkMode:
-            localStorage.getItem("darkMode") === "true"
-
-    };
-
-    const blob =
-        new Blob(
-            [JSON.stringify(data,null,2)],
-            {type:"application/json"}
-        );
-
-    const url =
-        URL.createObjectURL(blob);
-
-    const a =
-        document.createElement("a");
-
-    a.href = url;
-
-    a.download =
-        "StudyMate-Backup.json";
-
-    a.click();
-
-    URL.revokeObjectURL(url);
-}
-
-function importData(event){
-
-    const file =
-        event.target.files[0];
-
-    if(!file)
-        return;
-
-    const reader =
-        new FileReader();
-
-    reader.onload = function(e){
-
-        try{
-
-            const data =
-                JSON.parse(e.target.result);
-
-            if(data.profile){
-
-                localStorage.setItem(
-                    "studyProfile",
-                    JSON.stringify(data.profile)
-                );
-            }
-
-            if(data.subjects){
-
-                localStorage.setItem(
-                    "studySubjects",
-                    JSON.stringify(data.subjects)
-                );
-            }
-
-            if(data.tasks){
-
-                localStorage.setItem(
-                    "studyTasks",
-                    JSON.stringify(data.tasks)
-                );
-
-                tasks = data.tasks;
-            }
-
-            if(data.notes){
-
-                localStorage.setItem(
-                    "studyNotes",
-                    JSON.stringify(data.notes)
-                );
-
-                notes = data.notes;
-            }
-
-            if(data.darkMode !== undefined){
-
-                localStorage.setItem(
-                    "darkMode",
-                    data.darkMode
-                );
-            }
-
-            alert(
-                "Backup restored successfully! 🎉"
-            );
-
-            location.reload();
-
-        }catch(error){
-
-            alert(
-                "Invalid backup file!"
-            );
-        }
-    };
-
-    reader.readAsText(file);
-}
-
-
-/* ================================
-   HELPERS
-================================ */
-
-function getToday(){
-
-    return dateToString(
-        new Date()
-    );
-}
-
-function dateToString(date){
-
-    const year =
-        date.getFullYear();
-
-    const month =
-        String(
-            date.getMonth()+1
-        ).padStart(2,"0");
-
-    const day =
-        String(
-            date.getDate()
-        ).padStart(2,"0");
-
-    return `${year}-${month}-${day}`;
-}
-
-function formatDate(date){
-
-    if(!date)
-        return "No date";
-
-    const parts =
-        date.split("-");
-
-    return `${parts[2]}/${parts[1]}/${parts[0]}`;
-}
-
-function escapeHTML(text){
-
-    const div =
-        document.createElement("div");
+    const div = document.createElement("div");
 
     div.textContent = text;
 
@@ -2051,46 +583,370 @@ function escapeHTML(text){
 }
 
 
-/* ================================
-   INITIAL LOAD
-================================ */
+/* ================= PROGRESS ================= */
 
-document.getElementById("taskDate")
-    .value = getToday();
+function updateProgress() {
 
-showProfile();
+    const total = tasks.length;
 
-updateSubjectSelectors();
+    const completed =
+        tasks.filter(
+            task => task.completed
+        ).length;
 
-updateSubjectChips();
+    document.getElementById("totalCount")
+        .textContent = total;
+
+    document.getElementById("completedCount")
+        .textContent = completed;
+
+    const percentage =
+        total === 0
+        ? 0
+        : Math.round(
+            (completed / total) * 100
+        );
+
+    document.getElementById("percentageCount")
+        .textContent = percentage + "%";
+
+    document.getElementById("progressBar")
+        .style.width = percentage + "%";
+
+    document.getElementById("progressText")
+        .textContent =
+        percentage +
+        "% of your tasks completed";
+}
+
+
+/* ================= TIMER ================= */
+
+let timeLeft = 25 * 60;
+
+let timerInterval = null;
+
+function updateTimerDisplay() {
+
+    const minutes =
+        Math.floor(timeLeft / 60);
+
+    const seconds =
+        timeLeft % 60;
+
+    document.getElementById("timerDisplay")
+        .textContent =
+        String(minutes).padStart(2, "0")
+        + ":" +
+        String(seconds).padStart(2, "0");
+}
+
+function startTimer() {
+
+    if (timerInterval !== null) {
+
+        return;
+    }
+
+    timerInterval =
+        setInterval(() => {
+
+            if (timeLeft > 0) {
+
+                timeLeft--;
+
+                updateTimerDisplay();
+
+            } else {
+
+                clearInterval(timerInterval);
+
+                timerInterval = null;
+
+                alert(
+                    "🎉 Great job! Your study session is complete!"
+                );
+            }
+
+        }, 1000);
+}
+
+function pauseTimer() {
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+}
+
+function resetTimer() {
+
+    clearInterval(timerInterval);
+
+    timerInterval = null;
+
+    timeLeft = 25 * 60;
+
+    updateTimerDisplay();
+}
+
+
+/* ================= DAILY GOALS ================= */
+
+let goals =
+    JSON.parse(localStorage.getItem("studymateGoals")) || [];
+
+function saveGoals() {
+
+    localStorage.setItem(
+        "studymateGoals",
+        JSON.stringify(goals)
+    );
+}
+
+function addGoal() {
+
+    const input =
+        document.getElementById("goalInput");
+
+    const text = input.value.trim();
+
+    if (text === "") {
+
+        alert("Please enter a goal.");
+
+        return;
+    }
+
+    goals.push({
+
+        text: text,
+
+        completed: false
+    });
+
+    input.value = "";
+
+    saveGoals();
+
+    displayGoals();
+}
+
+function toggleGoal(index) {
+
+    goals[index].completed =
+        !goals[index].completed;
+
+    saveGoals();
+
+    displayGoals();
+}
+
+function deleteGoal(index) {
+
+    goals.splice(index, 1);
+
+    saveGoals();
+
+    displayGoals();
+}
+
+function displayGoals() {
+
+    const list =
+        document.getElementById("goalList");
+
+    list.innerHTML = "";
+
+    goals.forEach((goal, index) => {
+
+        const div =
+            document.createElement("div");
+
+        div.className = "goal";
+
+        div.innerHTML = `
+
+            <span
+                onclick="toggleGoal(${index})"
+                style="
+                    cursor:pointer;
+                    ${goal.completed
+                        ? "text-decoration:line-through;"
+                        : ""}
+                "
+            >
+                ${goal.completed ? "✅" : "⬜"}
+                ${escapeHTML(goal.text)}
+            </span>
+
+            <button
+                onclick="deleteGoal(${index})"
+            >
+                🗑
+            </button>
+        `;
+
+        list.appendChild(div);
+    });
+}
+
+
+/* ================= NOTES ================= */
+
+const savedNotes =
+    localStorage.getItem("studymateNotes");
+
+if (savedNotes) {
+
+    document.getElementById("notes")
+        .value = savedNotes;
+}
+
+function saveNotes() {
+
+    const notes =
+        document.getElementById("notes")
+            .value;
+
+    localStorage.setItem(
+        "studymateNotes",
+        notes
+    );
+
+    document.getElementById("noteStatus")
+        .textContent =
+        "✅ Notes saved successfully!";
+}
+
+function clearNotes() {
+
+    document.getElementById("notes")
+        .value = "";
+
+    localStorage.removeItem(
+        "studymateNotes"
+    );
+
+    document.getElementById("noteStatus")
+        .textContent =
+        "Notes cleared.";
+}
+
+
+/* ================= STUDY STREAK ================= */
+
+let streak =
+    Number(
+        localStorage.getItem(
+            "studymateStreak"
+        )
+    ) || 0;
+
+let lastStudyDate =
+    localStorage.getItem(
+        "studymateLastStudy"
+    );
+
+function displayStreak() {
+
+    document.getElementById("streakCount")
+        .textContent = streak;
+}
+
+function markStudyDay() {
+
+    const today =
+        new Date().toDateString();
+
+    if (lastStudyDate === today) {
+
+        alert(
+            "🔥 You already marked today as a study day!"
+        );
+
+        return;
+    }
+
+    streak++;
+
+    lastStudyDate = today;
+
+    localStorage.setItem(
+        "studymateStreak",
+        streak
+    );
+
+    localStorage.setItem(
+        "studymateLastStudy",
+        today
+    );
+
+    displayStreak();
+
+    alert(
+        "🎉 Study day recorded! Keep going!"
+    );
+}
+
+
+/* ================= QUIZ ================= */
+
+function checkAnswer(correct) {
+
+    const result =
+        document.getElementById(
+            "quizResult"
+        );
+
+    if (correct) {
+
+        result.textContent =
+            "✅ Correct! HTML is used to structure web pages.";
+
+    } else {
+
+        result.textContent =
+            "❌ Incorrect. Try again!";
+    }
+}
+
+
+/* ================= DARK MODE ================= */
+
+function toggleDarkMode() {
+
+    document.body.classList.toggle("dark");
+
+    const dark =
+        document.body.classList.contains("dark");
+
+    localStorage.setItem(
+        "studymateDarkMode",
+        dark
+    );
+}
+
+if (
+    localStorage.getItem(
+        "studymateDarkMode"
+    ) === "true"
+) {
+
+    document.body.classList.add("dark");
+}
+
+
+/* ================= INITIAL LOAD ================= */
 
 displayTasks();
 
-displayNotes();
+displayGoals();
 
-updateSubjectProgress();
+displayStreak();
 
-updateProgress();
-
-updateStreak();
-
-loadQuestion();
-
-if(
-    localStorage.getItem("darkMode") === "true"
-){
-
-    document.body.classList.add(
-        "dark-mode"
-    );
-
-    document.getElementById("darkModeButton")
-        .innerText =
-        "☀️ Light Mode";
-}
+updateTimerDisplay();
 
 </script>
 
 </body>
 </html>
-```
